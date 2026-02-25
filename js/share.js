@@ -1,8 +1,8 @@
 (() => {
   function stringfy(params = {}) {
     let str = '?';
-    for(let key of Reflect.ownKeys(params)) {
-      let value = !!params[key] ? encodeURIComponent(params[key]) : ''; 
+    for (let key of Reflect.ownKeys(params)) {
+      let value = !!params[key] ? encodeURIComponent(params[key]) : '';
       str = `${str}${key}=${value}&`;
     }
     return str.slice(0, str.length - 1);
@@ -22,7 +22,7 @@
 
   const mapSocialToUrl = (() => {
     const baseUrls = {
-      twitter: 'https://twitter.com/intent/tweet',
+      twitter: 'https://x.com/intent/tweet',
       facebook: 'https://www.facebook.com/sharer/sharer.php',
       qq: 'http://connect.qq.com/widget/shareqq/index.html',
       weibo: 'http://service.weibo.com/share/share.php'
@@ -64,8 +64,8 @@
   const { share } = window.AD_CONFIG;
   const socials = Reflect.ownKeys(share).filter(social => share[social]);
 
-  for(let social of socials) {
-    if(social === 'wechat') {
+  for (let social of socials) {
+    if (social === 'wechat') {
       continue;
     }
     document
@@ -73,7 +73,7 @@
       .setAttribute('href', mapSocialToUrl[social]);
   }
 
-  if(!socials.includes('wechat')) {
+  if (!socials.includes('wechat')) {
     return;
   }
 
@@ -97,7 +97,7 @@
       height: 256,
       colorDark: "#000000",
       colorLight: "#ffffff",
-      correctLevel : QRCode.CorrectLevel.H
+      correctLevel: QRCode.CorrectLevel.H
     });
 
     window.AD_CONFIG.layer.add(() => {
@@ -108,7 +108,7 @@
   });
 
   // control btn panel if show in mobile phone
-  if(socials.length > 0) {
+  if (socials.length > 0) {
     document.querySelector('#site-toggle-share-btn').addEventListener('click', toggleShareBtn());
   }
 })();
