@@ -69,7 +69,12 @@
   <link rel="stylesheet" href="/css/index.css">
   <link rel="stylesheet" href="/styles/components/highlight/highlight.css">
 
-
+  <script>
+    (function () {
+      var savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
 </head>
 
 <body>
@@ -307,6 +312,10 @@
 
       <a href="javascript:void(0);" id="back-top-btn">
         <i class="fa fa-chevron-up"></i>
+      </a>
+
+      <a href="javascript:void(0);" id="theme-toggle-btn">
+        <i class="fa fa-sun-o" id="theme-icon"></i>
       </a>
     </div>
   </div>

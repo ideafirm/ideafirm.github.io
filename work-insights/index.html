@@ -5,12 +5,45 @@
     <meta charset="utf-8">
     <title>工作心得 - 留给时间一点空间</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script>
+        (function () {
+            var savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <style>
+        :root[data-theme="light"] {
+            --bg-color: #f9f9f9;
+            --text-color: #555;
+            --heading-color: #333;
+            --btn-border: #007bff;
+            --btn-text: #007bff;
+            --btn-hover-bg: #007bff;
+            --btn-hover-text: #fff;
+            --toggle-bg: #fff;
+            --toggle-border: #ddd;
+            --toggle-text: #333;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #ccc;
+            --heading-color: #fff;
+            --btn-border: #4da3ff;
+            --btn-text: #4da3ff;
+            --btn-hover-bg: #4da3ff;
+            --btn-hover-text: #1a1a1a;
+            --toggle-bg: #333;
+            --toggle-border: #555;
+            --toggle-text: #e0e0e0;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: #f9f9f9;
+            background: var(--bg-color);
             margin: 0;
             padding: 0;
+            transition: background 0.3s, color 0.3s;
         }
 
         .placeholder-container {
@@ -18,15 +51,16 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 80vh;
+            min-height: 80vh;
             text-align: center;
-            color: #555;
+            color: var(--text-color);
+            padding: 20px;
         }
 
         .placeholder-container h1 {
             font-size: 2.5em;
             margin-bottom: 20px;
-            color: #333;
+            color: var(--heading-color);
         }
 
         .placeholder-container p {
@@ -38,18 +72,46 @@
         }
 
         .placeholder-container a {
-            color: #007bff;
+            color: var(--btn-text);
             text-decoration: none;
             margin-top: 30px;
             display: inline-block;
-            border: 1px solid #007bff;
+            border: 1px solid var(--btn-border);
             padding: 10px 20px;
             border-radius: 5px;
+            transition: all 0.3s;
         }
 
         .placeholder-container a:hover {
-            background: #007bff;
-            color: #fff;
+            background: var(--btn-hover-bg);
+            color: var(--btn-hover-text);
+        }
+
+        .theme-toggle-fixed {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--toggle-bg);
+            border: 1px solid var(--toggle-border);
+            color: var(--toggle-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            user-select: none;
+            text-decoration: none;
+            z-index: 1000;
+        }
+
+        .theme-toggle-fixed:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -60,6 +122,33 @@
         <p>这里将收录职场感悟、管理经验与做事的方法论。<br>内容正在整理归档中，敬请期待！</p>
         <a href="/">返回首页</a>
     </div>
+
+    <a href="javascript:void(0);" class="theme-toggle-fixed" id="theme-toggle-btn" title="切换主题">
+        <span id="theme-icon-text"></span>
+    </a>
+
+    <script>
+        const THEMES = { LIGHT: 'light', DARK: 'dark' };
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const themeIconText = document.getElementById('theme-icon-text');
+
+        function updateIcon(theme) {
+            themeIconText.innerText = theme === THEMES.LIGHT ? '☀️' : '🌙';
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || THEMES.LIGHT;
+            const newTheme = currentTheme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT;
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(newTheme);
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+
+        const currentTheme = document.documentElement.getAttribute('data-theme') || THEMES.LIGHT;
+        updateIcon(currentTheme);
+    </script>
 </body>
 
 </html>
